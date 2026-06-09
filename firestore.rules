@@ -1,0 +1,202 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 1. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper Primitives
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128;
+    }
+
+    // Schema Validations
+
+    function isValidUserProfile(data) {
+      return data.keys().hasAll(['name', 'isOnboarded'])
+        && data.keys().size() <= 7
+        && data.name is string && data.name.size() <= 150
+        && data.isOnboarded is bool
+        && (!data.keys().hasAny(['age']) || (data.age is string && data.age.size() <= 50))
+        && (!data.keys().hasAny(['bloodGroup']) || (data.bloodGroup is string && data.bloodGroup.size() <= 50))
+        && (!data.keys().hasAny(['photo']) || (data.photo is string && data.photo.size() <= 3000000))
+        && (!data.keys().hasAny(['role']) || (data.role is string && (data.role == 'protected' || data.role == 'guardian')));
+    }
+
+    function isValidGuardian(data) {
+      return data.keys().hasAll(['id', 'name', 'phone', 'email'])
+        && data.keys().size() <= 12
+        && data.id is string && data.id.size() <= 128
+        && data.name is string && data.name.size() <= 150
+        && data.phone is string && data.phone.size() <= 50
+        && data.email is string && data.email.size() <= 150
+        && (!data.keys().hasAny(['relationship']) || (data.relationship is string && data.relationship.size() <= 100))
+        && (!data.keys().hasAny(['isActive']) || data.isActive is bool)
+        && (!data.keys().hasAny(['isPriority']) || data.isPriority is bool)
+        && (!data.keys().hasAny(['status']) || (data.status is string && data.status.size() <= 100))
+        && (!data.keys().hasAny(['avatar']) || (data.avatar is string && data.avatar.size() <= 3000000))
+        && (!data.keys().hasAny(['createdAt']) || (data.createdAt is string && data.createdAt.size() <= 100));
+    }
+
+    function isValidIncidentLog(data) {
+      return data.keys().hasAll(['id', 'timestamp', 'utcTimestamp', 'type', 'description'])
+        && data.keys().size() == 5
+        && data.id is string && data.id.size() <= 128
+        && data.timestamp is string && data.timestamp.size() <= 50
+        && data.utcTimestamp is string && data.utcTimestamp.size() <= 50
+        && data.type is string && data.type.size() <= 50
+        && data.description is string && data.description.size() <= 1000;
+    }
+
+    function isValidEvidenceSnapshot(data) {
+      return data.keys().hasAll(['id', 'timestamp', 'imageUrl', 'battery', 'reason'])
+        && data.keys().size() <= 12
+        && data.id is string && data.id.size() <= 128
+        && data.timestamp is string && data.timestamp.size() <= 100
+        && data.imageUrl is string
+        && (data.battery is int || data.battery is float) && data.battery >= 0 && data.battery <= 100
+        && data.reason is string && data.reason.size() <= 2000
+        && (!data.keys().hasAny(['audioUrl']) || data.audioUrl is string)
+        && (!data.keys().hasAny(['audioDurationMs']) || (data.audioDurationMs is int || data.audioDurationMs is float))
+        && (!data.keys().hasAny(['location']) || data.location is list);
+    }
+
+    function isValidActivityLog(data) {
+      return data.keys().hasAll(['id', 'type', 'title', 'description', 'severity', 'timestamp', 'createdAtValue'])
+        && data.keys().size() <= 9
+        && data.id is string && data.id.size() <= 128
+        && data.type is string && data.type.size() <= 50
+        && data.title is string && data.title.size() <= 150
+        && data.description is string && data.description.size() <= 2000
+        && data.severity is string && data.severity.size() <= 50
+        && data.timestamp is string && data.timestamp.size() <= 50
+        && (data.createdAtValue is int || data.createdAtValue is float)
+        && (!data.keys().hasAny(['metadata']) || data.metadata is map);
+    }
+
+    function isValidConnection(data) {
+      return data.keys().hasAll(['id', 'protectedUserId', 'protectedUserName', 'guardianName', 'relationship', 'status', 'inviteCode', 'createdAt'])
+        && data.keys().size() <= 15
+        && data.id is string && data.id.size() <= 128
+        && data.protectedUserId is string && data.protectedUserId.size() <= 128
+        && data.protectedUserName is string && data.protectedUserName.size() <= 150
+        && data.guardianName is string && data.guardianName.size() <= 150
+        && data.relationship is string && data.relationship.size() <= 100
+        && data.status is string && (data.status == 'pending' || data.status == 'accepted')
+        && data.inviteCode is string && data.inviteCode.size() <= 50
+        && data.createdAt is string && data.createdAt.size() <= 100
+        && (!data.keys().hasAny(['protectedUserEmail']) || (data.protectedUserEmail is string && data.protectedUserEmail.size() <= 150))
+        && (!data.keys().hasAny(['protectedUserPhone']) || (data.protectedUserPhone is string && data.protectedUserPhone.size() <= 50))
+        && (!data.keys().hasAny(['guardianId']) || (data.guardianId is string && data.guardianId.size() <= 128))
+        && (!data.keys().hasAny(['guardianEmail']) || (data.guardianEmail is string && data.guardianEmail.size() <= 150))
+        && (!data.keys().hasAny(['guardianPhone']) || (data.guardianPhone is string && data.guardianPhone.size() <= 50))
+        && (!data.keys().hasAny(['deviceStatus']) || data.deviceStatus is map);
+    }
+
+    function isValidConnectionMessage(data) {
+      return data.keys().hasAll(['id', 'senderId', 'senderName', 'text', 'timestamp', 'createdAtValue', 'type', 'read'])
+        && data.keys().size() == 8
+        && data.id is string && data.id.size() <= 128
+        && data.senderId is string && data.senderId.size() <= 128
+        && data.senderName is string && data.senderName.size() <= 150
+        && data.text is string && data.text.size() <= 2000
+        && data.timestamp is string && data.timestamp.size() <= 100
+        && (data.createdAtValue is int || data.createdAtValue is float)
+        && data.type is string && (data.type == 'check_in_request' || data.type == 'check_in_response' || data.type == 'guardian_message' || data.type == 'system_alert' || data.type == 'journey_update' || data.type == 'arrival_update' || data.type == 'sos_alert')
+        && data.read is bool;
+    }
+
+    // Collection Endpoints with Zero-Trust protection
+
+    // User collection
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidId(userId) && isValidUserProfile(request.resource.data);
+      allow update: if isOwner(userId) && isValidUserProfile(request.resource.data);
+      allow delete: if false; // Security lock: user profiles can never be truncated or deleted on client
+
+      // Guardians subcollection
+      match /guardians/{guardianId} {
+        allow read, list: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidId(userId) && isValidId(guardianId) && isValidGuardian(request.resource.data);
+        allow update: if isOwner(userId) && isValidId(userId) && isValidId(guardianId) && isValidGuardian(request.resource.data)
+          && request.resource.data.id == resource.data.id; // Immutable ID
+        allow delete: if isOwner(userId) && isValidId(userId) && isValidId(guardianId);
+      }
+
+      // Incident Logs subcollection
+      match /incidentLogs/{logId} {
+        allow read, list: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidId(userId) && isValidId(logId) && isValidIncidentLog(request.resource.data);
+        allow update, delete: if false; // Immutable audit trails
+      }
+
+      // Evidence Snapshots subcollection
+      match /evidenceSnapshots/{snapshotId} {
+        allow read, list: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidId(userId) && isValidId(snapshotId) && isValidEvidenceSnapshot(request.resource.data);
+        allow update, delete: if false; // Immutable evidence proof
+      }
+
+      // Activity Logs subcollection
+      match /activityLogs/{logId} {
+        allow read, list: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidId(userId) && isValidId(logId) && isValidActivityLog(request.resource.data);
+        allow update, delete: if false; // Immutable safety trails
+      }
+    }
+
+    // Connections collection
+    match /connections/{connectionId} {
+      allow read, list: if isSignedIn() && (
+        resource.data.get('protectedUserId', '') == request.auth.uid ||
+        resource.data.get('guardianId', '') == request.auth.uid ||
+        resource.data.get('status', '') == 'pending'
+      );
+
+      allow create: if isSignedIn() && isValidId(connectionId) && isValidConnection(request.resource.data)
+        && request.resource.data.get('protectedUserId', '') == request.auth.uid;
+
+      allow update: if isSignedIn() && isValidConnection(request.resource.data) && (
+        resource.data.get('protectedUserId', '') == request.auth.uid ||
+        resource.data.get('guardianId', '') == request.auth.uid ||
+        (resource.data.get('status', '') == 'pending' && request.resource.data.get('status', '') == 'accepted' && request.resource.data.get('guardianId', '') == request.auth.uid)
+      );
+
+      allow delete: if isSignedIn() && (
+        resource.data.get('protectedUserId', '') == request.auth.uid ||
+        resource.data.get('guardianId', '') == request.auth.uid
+      );
+
+      // Connection messages subcollection
+      match /messages/{messageId} {
+        allow read, list: if isSignedIn() && (
+          get(/databases/$(database)/documents/connections/$(connectionId)).data.get('protectedUserId', '') == request.auth.uid ||
+          get(/databases/$(database)/documents/connections/$(connectionId)).data.get('guardianId', '') == request.auth.uid
+        );
+
+        allow create: if isSignedIn() && isValidId(messageId) && isValidConnectionMessage(request.resource.data) && (
+          get(/databases/$(database)/documents/connections/$(connectionId)).data.get('protectedUserId', '') == request.auth.uid ||
+          get(/databases/$(database)/documents/connections/$(connectionId)).data.get('guardianId', '') == request.auth.uid
+        );
+
+        allow update: if isSignedIn() && (
+          get(/databases/$(database)/documents/connections/$(connectionId)).data.get('protectedUserId', '') == request.auth.uid ||
+          get(/databases/$(database)/documents/connections/$(connectionId)).data.get('guardianId', '') == request.auth.uid
+        ) && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read']);
+
+        allow delete: if false;
+      }
+    }
+  }
+}

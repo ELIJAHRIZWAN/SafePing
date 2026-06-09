@@ -1,0 +1,149 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "The user's personal profile information for emergency responders.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "age": { "type": "string" },
+        "bloodGroup": { "type": "string" },
+        "photo": { "type": "string" },
+        "isOnboarded": { "type": "boolean" },
+        "role": { "type": "string", "enum": ["protected", "guardian"] }
+      },
+      "required": ["name", "isOnboarded"]
+    },
+    "Guardian": {
+      "title": "Guardian",
+      "description": "Emergency guardian details for real-time contact and alert routing.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "relationship": { "type": "string" },
+        "avatar": { "type": "string" },
+        "isPriority": { "type": "boolean" },
+        "status": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name", "phone", "email"]
+    },
+    "IncidentLog": {
+      "title": "IncidentLog",
+      "description": "Log entry tracking precise action, deviation or hazard occurrences during an incident.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "utcTimestamp": { "type": "string" },
+        "type": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "required": ["id", "timestamp", "utcTimestamp", "type", "description"]
+    },
+    "EvidenceSnapshot": {
+      "title": "EvidenceSnapshot",
+      "description": "Rich situational media snapshot captured in emergency silent proof mode.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "location": { "type": "array" },
+        "battery": { "type": "number" },
+        "reason": { "type": "string" },
+        "audioUrl": { "type": "string" },
+        "audioDurationMs": { "type": "number" }
+      },
+      "required": ["id", "timestamp", "imageUrl", "battery", "reason"]
+    },
+    "ActivityLog": {
+      "title": "ActivityLog",
+      "description": "Granular chronological entry representing a primary action or safety state change in SafePing.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string", "enum": ["checkin", "journey", "arrival", "alert", "sos", "guardian", "pen", "system"] },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "severity": { "type": "string", "enum": ["safe", "info", "warning", "critical"] },
+        "timestamp": { "type": "string" },
+        "createdAtValue": { "type": "number" },
+        "metadata": { "type": "object" }
+      },
+      "required": ["id", "type", "title", "description", "severity", "timestamp", "createdAtValue"]
+    },
+    "Connection": {
+      "title": "Connection",
+      "description": "Real-time connection link between a protected user and a guardian.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "protectedUserId": { "type": "string" },
+        "protectedUserName": { "type": "string" },
+        "protectedUserEmail": { "type": "string" },
+        "protectedUserPhone": { "type": "string" },
+        "guardianId": { "type": "string" },
+        "guardianName": { "type": "string" },
+        "guardianEmail": { "type": "string" },
+        "guardianPhone": { "type": "string" },
+        "relationship": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "accepted"] },
+        "inviteCode": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "deviceStatus": { "type": "object" }
+      },
+      "required": ["id", "protectedUserId", "protectedUserName", "guardianName", "relationship", "status", "inviteCode", "createdAt"]
+    },
+    "ConnectionMessage": {
+      "title": "ConnectionMessage",
+      "description": "A real-time safety message or automatic alert sent within a connection.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "text": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "createdAtValue": { "type": "number" },
+        "type": { "type": "string", "enum": ["check_in_request", "check_in_response", "guardian_message", "system_alert", "journey_update", "arrival_update", "sos_alert"] },
+        "read": { "type": "boolean" }
+      },
+      "required": ["id", "senderId", "senderName", "text", "timestamp", "createdAtValue", "type", "read"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Primary user profile node accessed only by the signed-in owner."
+    },
+    "/users/{userId}/guardians/{guardianId}": {
+      "schema": "Guardian",
+      "description": "User's individual crisis contact nodes."
+    },
+    "/users/{userId}/incidentLogs/{logId}": {
+      "schema": "IncidentLog",
+      "description": "Chronological history of active alarms or escorts."
+    },
+    "/users/{userId}/evidenceSnapshots/{snapshotId}": {
+      "schema": "EvidenceSnapshot",
+      "description": "Camera/audio proofs recorded during Silent Evidence sessions."
+    },
+    "/users/{userId}/activityLogs/{logId}": {
+      "schema": "ActivityLog",
+      "description": "SafePing activity timeline tracking checkins, journeys, alerts, guard events, and sys events."
+    },
+    "/connections/{connectionId}": {
+      "schema": "Connection",
+      "description": "Active real-time connection nodes."
+    },
+    "/connections/{connectionId}/messages/{messageId}": {
+      "schema": "ConnectionMessage",
+      "description": "Real-time communication, events, status alerts, and triggers between connected parties."
+    }
+  }
+}

@@ -1,0 +1,804 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800;900&family=Cinzel:wght@400;700&family=Caveat:wght@400;700&family=Poiret+One&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Instrument+Serif:ital,wght@0,400;1,400&family=Playfair+Display:ital,wght@0,405;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Pacifico&family=La+Belle+Aurore&display=swap');
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Happy+Monkey&display=swap');
+/* -------------------------------------------------------------
+   PREMIUM CUSTOM TYPOGRAPHY SYSTEM
+   Landsdowne, Ostrich Sans Bold, Riesling, Susie's Hand, Pharmacy
+   ------------------------------------------------------------- */
+
+/* 1. Landsdowne (Hero & Greetings) */
+@font-face {
+  font-family: 'Landsdowne';
+  src: url('https://db.onlinewebfonts.com/t/7568d7443367d595d2667cc7ca0cc91f.woff2') format('woff2'),
+       url('https://db.onlinewebfonts.com/t/7568d7443367d595d2667cc7ca0cc91f.woff') format('woff'),
+       url('https://db.onlinewebfonts.com/t/7568d7443367d595d2667cc7ca0cc91f.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+.font-caveat {
+  font-family: 'Caveat', cursive;
+  color: #63F5E6;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.font-dear-joe {
+  font-family: 'La Belle Aurore', cursive;
+  letter-spacing: 0.03em;
+}
+.font-happy-monkey {
+  font-family: 'Happy Monkey', cursive;
+}
+.font-manrope {
+  font-family: 'Manrope', sans-serif;
+}
+.pen-reassurance-styling {
+  font-size: 14px;
+  color: #a0cfe4;
+  font-family: 'Happy Monkey', cursive;
+  font-weight: normal;
+  text-align: center;
+  line-height: 21.25px;
+}
+
+/* 2. Ostrich Sans Bold (System UI, uppercase, navigation labels) */
+@font-face {
+  font-family: 'Ostrich Sans';
+  src: url('https://cdn.jsdelivr.net/gh/theleagueof/ostrich-sans@master/OstrichSansNew-Bold.otf') format('opentype'),
+       url('https://cdn.jsdelivr.net/gh/theleagueof/ostrich-sans@master/OstrichSans-Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 3. Riesling (Safeping Logo and splash brand only) */
+@font-face {
+  font-family: 'Riesling';
+  src: url('https://db.onlinewebfonts.com/t/8ce9c6faab8cda608c0ef22e6b0bcda6.woff2') format('woff2'),
+       url('https://db.onlinewebfonts.com/t/8ce9c6faab8cda608c0ef22e6b0bcda6.woff') format('woff'),
+       url('https://db.onlinewebfonts.com/t/8ce9c6faab8cda608c0ef22e6b0bcda6.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 4. Susie's Hand (Emotional reassurance notes, sparingly) */
+@font-face {
+  font-family: 'Susies Hand';
+  src: url('https://db.onlinewebfonts.com/t/ec5b90f779774a35bc45bc25fbd84e72.woff2') format('woff2'),
+       url('https://db.onlinewebfonts.com/t/ec5b90f779774a35bc45bc25fbd84e72.woff') format('woff'),
+       url('https://db.onlinewebfonts.com/t/ec5b90f779774a35bc45bc25fbd84e72.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 5. Pharmacy (Elegant visual onboarding accent only) */
+@font-face {
+  font-family: 'Pharmacy';
+  src: url('https://db.onlinewebfonts.com/t/d0e53a31c5108cb6706e2ea470659a16.woff2') format('woff2'),
+       url('https://db.onlinewebfonts.com/t/d0e53a31c5108cb6706e2ea470659a16.woff') format('woff'),
+       url('https://db.onlinewebfonts.com/t/d0e53a31c5108cb6706e2ea470659a16.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Manrope", "Inter", sans-serif;
+  --font-plus-jakarta: "Plus Jakarta Sans", "Inter", sans-serif;
+  --font-pacifico: "Pacifico", cursive, sans-serif;
+  --font-dear-joe: "La Belle Aurore", "Caveat", cursive;
+  --font-happy-monkey: "Happy Monkey", cursive;
+
+  /* Custom Typography Mappings */
+  --font-playfair: "Playfair Display", "Georgia", serif;
+  --font-cormorant: "Cormorant Garamond", "Playfair Display", "Georgia", serif;
+  --font-instrument: "Instrument Serif", "Playfair Display", "Georgia", serif;
+  --font-landsdowne: "Landsdowne", "Georgia", "Times New Roman", serif;
+  --font-ostrich: "Ostrich Sans", "Impact", "Arial Black", sans-serif;
+  --font-riesling: "Riesling", "Poiret One", "Cinzel", "Bodoni MT", serif;
+  --font-susie: "Susies Hand", "Caveat", "Gochi Hand", cursive;
+  --font-pharmacy: "Pharmacy", "Cinzel Decorative", serif;
+
+  /* PREMIUM CALM PROTECTION PALETTE */
+  --color-primary: #3BE0B9;
+  /* Calm Teal Accent */
+  --color-secondary: #3BE0B9;
+  /* Calm Teal Accent */
+
+  /* PREMIUM DARK SAFETY SYSTEM LANDSCAPES */
+  --color-bg-dark: #070B13;
+  /* Deep Navy base */
+  --color-bg-secondary: #0D1625;
+  /* Calmer navy card surface */
+  --color-navy-dark: #070B13;
+
+  --color-card-dark: rgba(13, 22, 37, 0.84);
+
+  --color-text-primary: rgba(245, 247, 250, 0.94);
+  /* Soft Premium White */
+  --color-text-secondary: rgba(170, 182, 196, 0.72);
+  /* Muted Blue-Gray */
+
+  /* COMPANION GROUNDED CORRIDOR STATES */
+  --color-safe: #3BE0B9;
+  /* Teal-green */
+  --color-safe-glow: rgba(59, 224, 185, 0.2);
+
+  /* EMERGENCY STATES - CALM YET CRITICAL */
+  --color-emergency: #FF4D5E;
+  /* Emergency Coral/Red */
+  --color-emergency-glow: rgba(255, 77, 94, 0.3);
+
+  /* LIGHT THEME OPTIMIZATIONS (Calmly preserving cozy contrast) */
+  --color-bg-light: #F4F6F9;
+  --color-card-light: rgba(255, 255, 255, 0.85);
+
+  --color-light-primary: #3BE0B9;
+  --color-light-secondary: #3BE0B9;
+
+  --color-light-text: #0D1625;
+  --color-light-subtext: #505E70;
+
+  /* BORDERS AND RADIUS RULES */
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-3xl: 2.5rem;
+}
+
+/* MASCOT MARKERS */
+.mascot-marker-container {
+  background: transparent !important;
+  border: none !important;
+}
+
+.guardian-wrapper {
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.guardian-penguin {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2)) drop-shadow(0 0 24px rgba(255, 255, 255, 0.1));
+}
+
+
+.mascot-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  transform-origin: center bottom;
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.female-mascot-img {
+  width: auto;
+  height: 95px;
+  /* Enhanced visibility (+18%) */
+  display: block;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 0 12px rgba(0, 255, 255, 0.45)) drop-shadow(0 0 24px rgba(0, 255, 255, 0.25));
+  transition: all 0.3s ease;
+}
+
+.penguin-mascot-img {
+  width: auto;
+  height: 78px;
+  /* Enhanced visibility (+20%) */
+  display: block;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 0 12px rgba(0, 255, 255, 0.45)) drop-shadow(0 0 24px rgba(0, 255, 255, 0.25));
+  transition: all 0.3s ease;
+}
+
+.mascot-marker-container:hover .female-mascot-img,
+.mascot-marker-container:hover .penguin-mascot-img {
+  filter:
+    drop-shadow(0 0 8px rgba(0, 255, 255, 0.6)) drop-shadow(0 0 16px rgba(0, 255, 255, 0.35));
+}
+
+@layer base {
+  body {
+    background:
+      radial-gradient(circle at center,
+        #0b2c2f 0%,
+        #07141f 45%,
+        #020611 100%);
+    margin: 0;
+    padding: 0;
+
+    font-family: var(--font-sans);
+
+    color: var(--color-text-primary);
+
+    min-height: 100vh;
+
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body.dark {
+    background-image:
+      radial-gradient(circle at 25% 20%, rgba(59, 224, 185, 0.03), transparent 55%),
+      radial-gradient(circle at 80% 85%, rgba(59, 224, 185, 0.015), transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(59, 224, 185, 0.01), transparent 60%),
+      radial-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+
+    background-size:
+      auto,
+      auto,
+      auto,
+      4px 4px;
+
+    color: var(--color-text-primary);
+  }
+
+  body.light {
+    background-image:
+      radial-gradient(circle at 15% 15%, rgba(59, 224, 185, 0.04), transparent 45%),
+      radial-gradient(circle at 85% 85%, rgba(59, 224, 185, 0.04), transparent 45%);
+
+    background-color: #F4F6F9;
+
+    color: #0D1625;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply backdrop-blur-3xl border transition-all duration-700 shadow-2xl;
+  }
+
+  .dark .glass {
+    @apply bg-bg-secondary/80 border-white/10;
+  }
+
+  .light .glass {
+    @apply bg-white/50 border-slate-200;
+  }
+
+  .glass-dark {
+    @apply bg-bg-secondary/80 backdrop-blur-3xl border border-white/10 shadow-2xl;
+  }
+
+  .glass-light {
+    @apply bg-white/60 backdrop-blur-3xl border border-slate-200/60 shadow-xl;
+  }
+
+  .sos-pulse {
+    animation: sos-pulse-animation 2s infinite ease-out;
+  }
+
+  @keyframes sos-pulse-animation {
+    0% {
+      box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.6);
+    }
+
+    70% {
+      box-shadow: 0 0 0 40px rgba(255, 59, 48, 0);
+    }
+
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 59, 48, 0);
+    }
+  }
+
+  .glow-red {
+    box-shadow: 0 0 50px var(--color-emergency-glow);
+  }
+
+  .glow-primary {
+    box-shadow: 0 0 18px rgba(79, 209, 197, 0.18);
+  }
+
+  .leaflet-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 32px;
+    background: #0B1023 !important;
+    box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.05), 0 0 30px rgba(0, 255, 255, 0.02);
+  }
+
+  /* Dark mode theme for Leaflet - Natural Dark theme without filters */
+  .leaflet-tile {}
+
+  .leaflet-tile-container {}
+
+  .leaflet-control-attribution {
+    background: rgba(0, 0, 0, 0.15) !important;
+    color: rgba(255, 255, 255, 0.35) !important;
+    font-size: 8px !important;
+    border-radius: 10px !important;
+    padding: 2px 6px !important;
+    backdrop-filter: blur(8px);
+  }
+
+  .leaflet-control-attribution a {
+    color: rgba(120, 180, 255, 0.45) !important;
+    text-decoration: none !important;
+  }
+
+  .leaflet-bar {
+    border: none !important;
+    background-color: rgba(0, 0, 0, 0.4) !important;
+    backdrop-filter: blur(64px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    overflow: hidden !important;
+    border-radius: 1rem !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  .leaflet-bar a {
+    @apply !bg-transparent !text-white !border-white/10 hover:!bg-white/10 !transition-all;
+  }
+
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .pulse-glow-red {
+    animation: pulse-glow-red 3s infinite ease-in-out;
+  }
+
+  .animate-bounce-subtle {
+    animation: bounce-subtle 3s infinite ease-in-out;
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+
+  @keyframes pulse-glow-red {
+
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    50% {
+      box-shadow: 0 0 40px rgba(239, 68, 68, 0.4);
+      border-color: rgba(239, 68, 68, 0.6);
+    }
+  }
+
+  @keyframes bounce-subtle {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+
+  .animate-bounce-slow {
+    animation: bounce-subtle 3s infinite ease-in-out;
+  }
+
+  @keyframes sos-radar-pulse {
+    0% {
+      transform: scale(0.2);
+      opacity: 1;
+    }
+
+    100% {
+      transform: scale(2.5);
+      opacity: 0;
+    }
+  }
+
+  .animate-sos-pulse {
+    animation: sos-radar-pulse 4s infinite ease-out;
+  }
+
+  .radar-marker {
+    pointer-events: none !important;
+  }
+
+  .sos-mascot-active {
+    filter: drop-shadow(0 0 15px rgba(255, 105, 180, 0.8));
+    animation: sos-mascot-alert 1.5s infinite ease-in-out;
+  }
+
+  /* HERO MASCOT UPGRADE: Sunglasses and Scarf */
+  .mascot-hero-mode {
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.4)) drop-shadow(0 0 8px rgba(255, 105, 180, 0.4));
+  }
+
+  /* TACTICAL BUBBLE SYSTEM */
+  .penguin-bubble-marker {
+    background: transparent !important;
+    border: none !important;
+    pointer-events: none !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+  }
+
+  .penguin-speech-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    width: 600px;
+    /* Large enough to prevent clipping */
+    height: 400px;
+    padding-bottom: 20px;
+  }
+
+  .penguin-speech-bubble {
+    position: relative;
+    width: fit-content;
+    max-width: 320px;
+    min-width: 140px;
+    background: rgba(11, 16, 35, 0.98);
+    backdrop-filter: blur(32px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 28px;
+    padding: 20px 28px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .penguin-speech-bubble.bubble-emergency {
+    border-color: rgba(255, 105, 180, 0.35);
+    box-shadow: 0 0 25px rgba(255, 105, 180, 0.15);
+  }
+
+  .penguin-speech-bubble.bubble-safe {
+    border-color: rgba(34, 197, 94, 0.3);
+  }
+
+  .penguin-speech-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    line-height: 1.6;
+    margin: 0;
+    letter-spacing: 0.01em;
+  }
+
+  .penguin-speech-tail {
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 12px;
+    height: 12px;
+    background: rgba(11, 16, 35, 0.98);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .bubble-emergency .penguin-speech-tail {
+    border-right-color: rgba(255, 105, 180, 0.35);
+    border-bottom-color: rgba(255, 105, 180, 0.35);
+  }
+
+  /* TACTICAL HUD ELEMENTS */
+  .tactical-scanning-timer {
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .scanning-progress-bar {
+    height: 2px;
+    background: rgba(255, 105, 180, 0.15);
+    overflow: hidden;
+    position: relative;
+    border-radius: 1px;
+  }
+
+  .scanning-progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: #ff69b4;
+    box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+    animation: scanning-fill 1.5s infinite ease-in-out;
+  }
+
+  @keyframes scanning-fill {
+    0% {
+      transform: translateX(-100%);
+    }
+
+    50% {
+      transform: translateX(0%);
+    }
+
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes sos-mascot-alert {
+
+    0%,
+    100% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.05) translate(-2px, -6px);
+    }
+  }
+
+  .tactical-red-filter {}
+
+  .tactical-scanning-grid {
+    background-image:
+      linear-gradient(rgba(255, 105, 180, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 105, 180, 0.08) 1px, transparent 1px);
+    background-size: 20px 20px;
+    animation: scanning-move 20s linear infinite;
+  }
+
+  @keyframes scanning-move {
+    from {
+      background-position: 0 0;
+    }
+
+    to {
+      background-position: 40px 40px;
+    }
+  }
+
+  .radar-sweep {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: conic-gradient(from 0deg, transparent 0deg, rgba(255, 105, 180, 0.15) 30deg, transparent 60deg);
+    animation: radar-rotate 4s linear infinite;
+    pointer-events: none;
+    z-index: 450;
+  }
+
+  @keyframes radar-rotate {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .optimistic-route-line {
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.2));
+    opacity: 0.7;
+  }
+
+  @keyframes dash-optimistic {
+    to {
+      stroke-dashoffset: -20;
+    }
+  }
+
+  .neon-route-glow {
+    filter: drop-shadow(0 0 8px #3b82f6) drop-shadow(0 0 12px #3b82f6);
+    stroke-dasharray: 20;
+    animation: dash 20s linear infinite;
+  }
+
+  .neon-route-glow-safer {
+    filter: drop-shadow(0 0 10px #22d3ee) drop-shadow(0 0 15px #06b6d4);
+    stroke-dasharray: 15;
+    animation: dash-safer 15s linear infinite;
+  }
+
+  .neon-route-glow-safer-emergency {
+    filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.5)) drop-shadow(0 0 20px rgba(255, 20, 147, 0.3));
+    stroke-dasharray: 20;
+    animation: dash-safer 12s linear infinite;
+    opacity: 0.9;
+  }
+
+  .neon-route-glow-isolated {
+    filter: drop-shadow(0 0 10px #ef4444) drop-shadow(0 0 20px #dc2626) drop-shadow(0 0 30px rgba(239, 68, 68, 0.2));
+    stroke-dasharray: 10, 15;
+    animation: dash-safer 10s linear infinite;
+    opacity: 0.85;
+  }
+
+  .neon-route-glow-deviated {
+    filter: drop-shadow(0 0 10px #f59e0b) drop-shadow(0 0 18px #d97706);
+    stroke-dasharray: 15, 15;
+    animation: dash-safer 13s linear infinite;
+    opacity: 0.9;
+  }
+
+  .neon-route-glow-stop {
+    filter: drop-shadow(0 0 8px #a855f7) drop-shadow(0 0 15px #7c3aed);
+    stroke-dasharray: 8, 8;
+    animation: dash-safer 18s linear infinite;
+    opacity: 0.8;
+  }
+
+  .faster-route-line {
+    filter: drop-shadow(0 0 4px #34d399);
+  }
+
+  @keyframes dash {
+    from {
+      stroke-dashoffset: 500;
+    }
+
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes dash-safer {
+    from {
+      stroke-dashoffset: 400;
+    }
+
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .animate-emergency-pulse {
+    animation: emergency-pulse 4.5s infinite alternate ease-in-out;
+  }
+
+  @keyframes emergency-pulse {
+    from {
+      box-shadow: inset 0 0 50px rgba(239, 68, 68, 0.15), 0 0 10px rgba(239, 68, 68, 0.05);
+      border-color: rgba(239, 68, 68, 0.15);
+    }
+
+    to {
+      box-shadow: inset 0 0 90px rgba(239, 68, 68, 0.35), 0 0 25px rgba(239, 68, 68, 0.18);
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+  }
+
+  /* REAL-TIME RADAR PULSE SYSTEM */
+  @keyframes radar-pulse-expand {
+    0% {
+      transform: scale(0.35);
+      opacity: 0.85;
+    }
+    50% {
+      opacity: 0.45;
+    }
+    100% {
+      transform: scale(2.2);
+      opacity: 0;
+    }
+  }
+
+  .user-pulse-ring-1, .user-pulse-ring-2, .user-pulse-ring-3 {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.35);
+    transform-origin: center;
+  }
+
+  .user-pulse-ring-1 {
+    animation: radar-pulse-expand 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+  }
+  .user-pulse-ring-2 {
+    animation: radar-pulse-expand 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+    animation-delay: 1s;
+  }
+  .user-pulse-ring-3 {
+    animation: radar-pulse-expand 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+    animation-delay: 2s;
+  }
+
+  /* Movement-reactive pulse intensity rates */
+  .pulse-fast.user-pulse-ring-1 {
+    animation-duration: 1.5s;
+  }
+  .pulse-fast.user-pulse-ring-2 {
+    animation-duration: 1.5s;
+    animation-delay: 0.5s;
+  }
+  .pulse-fast.user-pulse-ring-3 {
+    animation-duration: 1.5s;
+    animation-delay: 1s;
+  }
+
+  /* ATMOSPHERIC ENVIRONMENTAL DEPTH FOG */
+  @keyframes fog-drift {
+    0% {
+      transform: translate(-10px, -10px) scale(1);
+      opacity: 0.08;
+    }
+    50% {
+      transform: translate(15px, 15px) scale(1.08);
+      opacity: 0.22;
+    }
+    100% {
+      transform: translate(-10px, -10px) scale(1);
+      opacity: 0.08;
+    }
+  }
+
+  .drifting-cloud-layer {
+    animation: fog-drift 26s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  /* CINEMATIC SAFE CORRIDOR LINES */
+  .safe-corridor-broad-aura {
+    filter: blur(8px) drop-shadow(0 0 12px rgba(59, 224, 185, 0.45));
+  }
+
+  .safe-corridor-flow-line {
+    filter: drop-shadow(0 0 6px rgba(59, 224, 185, 0.6));
+    stroke-dasharray: 10, 15;
+    animation: safe-flow-dash 8s linear infinite;
+  }
+
+  .safe-corridor-flow-line-risk {
+    filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.7));
+    stroke-dasharray: 12, 12;
+    animation: safe-flow-dash 5s linear infinite;
+  }
+
+  .safe-corridor-flow-line-emergency {
+    filter: drop-shadow(0 0 10px rgba(244, 63, 94, 0.85));
+    stroke-dasharray: 8, 8;
+    animation: safe-flow-dash 3s linear infinite;
+  }
+
+  .safe-corridor-particles {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 2px rgba(59, 224, 185, 0.95));
+    stroke-dasharray: 4, 32;
+    animation: safe-flow-dash 5s linear infinite;
+  }
+
+  @keyframes safe-flow-dash {
+    to {
+      stroke-dashoffset: -320;
+    }
+  }
+}

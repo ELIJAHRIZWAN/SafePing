@@ -1,0 +1,15 @@
+{
+  "name": "SafePing",
+  "description": "Premium futuristic safety companion for students, women, and travelers. Featuring glassmorphism UI, AI voice triggers, and intelligent emergency protocols.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "Emergency Safety",
+    "Live Tracking",
+    "Voice Activation",
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
